@@ -228,7 +228,7 @@ def player_miss_data(input_fields, player_io_df, player_ou_df):
             net_out_val = 0
         else:
             net_out_val = (io_dict['flailed'] - io_dict['tied_up']) / (io_dict['flailed'] + io_dict['tied_up'])
-        test_io['distance'] = test_io['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(4.0*net_out_val,4/3,size=test_io.shape[0])),-4,4).astype('float'))
+        test_io['distance'] = test_io['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(3.5*net_out_val,4/3,size=test_io.shape[0])),-4,4).astype('float'))
 
     test_ou = player_ou_df.loc[(player_ou_df['game_date']==date) &
                                 (player_ou_df['api_pitch_type']==pitch_type) &
@@ -242,7 +242,7 @@ def player_miss_data(input_fields, player_io_df, player_ou_df):
             net_over_val = 0
         else:
             net_over_val = (ou_dict['under'] - ou_dict['over']) / (ou_dict['under'] + ou_dict['over'])
-        test_ou['distance'] = test_ou['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(2.0*net_over_val,2/3,size=test_ou.shape[0])),-2,2).astype('float'))
+        test_ou['distance'] = test_ou['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(1.5*net_over_val,2/3,size=test_ou.shape[0])),-2,2).astype('float'))
 
     return combine_counts(test_io,test_ou,pitch_type,throw,stand)
 
