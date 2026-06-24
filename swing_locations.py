@@ -417,7 +417,7 @@ st.radio("Select a position:", ['Pitcher','Batter'],index=0,
 
 pos_text = ss['pos'].lower()
 pos = pos_text[0]
-player_list = timing_data.loc[timing_data['pos']==pos_text,'name'].sort_values(key=lambda x: x.str.lower()).unique()
+player_list = list(timing_data.loc[timing_data['pos']==pos_text,'name'].sort_values(key=lambda x: x.str.lower()).unique())
 
 if 'player' not in ss:
     if ss['pos'] == 'Pitcher':
