@@ -320,7 +320,7 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         else:
             bw_adjust = 1.1
         chart_df = combo_df.loc[(combo_df[group_base]==group) & (combo_df['p_hand']==p_hand) & (combo_df['b_hand']==b_hand)].reset_index(drop=True)
-        chart_df = chart_df[['mul','in_out','over_under']].loc[chart_df.index.repeat(chart_df['mul'].max()-chart_df['mul']+1)].reset_index(drop=True)
+        chart_df = chart_df[['mul','in_out','over_under']].loc[chart_df.index.repeat(chart_df['mul'].max()**0.5-chart_df['mul']**0.5+1)].reset_index(drop=True)
 
         # gauss_data = np.vstack([chart_df['in_out'],chart_df['over_under']])
         # kde = gaussian_kde(gauss_data)
