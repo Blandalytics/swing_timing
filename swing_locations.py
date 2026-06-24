@@ -422,8 +422,6 @@ if 'pos' not in ss:
 def pos_change():
     if 'player' in ss:
         del ss['player']
-        if chart_df:
-            del chart_df
 col1, col2, col3 = st.columns([0.2,0.35,0.45])
 with col1:
     st.radio("Select a position:", ['Pitcher','Batter'],index=0, 
