@@ -253,6 +253,8 @@ def expand_data(input_list, player_io_df, player_ou_df):
 
 def transform_data(player_id,base_df,pos_text,p_hand,b_hand):
     group_cols = ['id','name','pos','game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']
+    in_out = ['tied_up', 'centered', 'flailed']
+    over_under = ['over', 'lined_up', 'under']
     
     player_df = base_df.loc[(base_df['id']==player_id) & (base_df['pos']==pos_text) & (base_df['pitch_hand']==p_hand) & (base_df['bat_side']==b_hand)]
     player_io_df = (
