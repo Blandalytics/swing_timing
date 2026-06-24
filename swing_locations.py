@@ -134,12 +134,12 @@ def pull_day_misses(day):
         date_dfs += [pd.read_csv(io.StringIO(res_miss_dist.decode('utf-8'))).assign(game_date = day, pos=pos)]
     return pd.concat(date_dfs,ignore_index=True).reset_index()
 
+@st.cache_data(ttl=3600)
 def load_timing_data():
     date_dfs = []
     with ThreadPoolExecutor(max_workers=16) as executor:
         futures = {executor.submit(pull_day_misses, day): day for day in pd.date_range(start=datetime(2026, 3, 25), end=datetime.now(ZoneInfo("America/New_York")).date()-timedelta(days=1))}
-        for future in tqdm.tqdm(as_completed(futures), total=len(futures), desc="Processing", unit="days"):
-        # for future in as_completed(futures):
+        for future in as_completed(futures):
             date_dfs += [future.result()]
     raw_data = pd.concat(date_dfs,ignore_index=True).reset_index()
     miss_concise_df = raw_data[['game_date','id', 'name','pos','bat_side', 'pitch_hand',
@@ -164,8 +164,9 @@ def load_timing_data():
     for stat in timing_types:
         miss_concise_df[stat] = miss_concise_df[stat+'_percent'].mul(miss_concise_df['n_swings']).round(0).astype('int')
     return miss_concise_df
-
-timing_data = load_timing_data()
+    
+with st.spinner("Loading Swing Data...", show_time=True):
+    timing_data = load_timing_data()
 timing_data['name'] = [' '.join(x.split(', ')[::-1]) for x in timing_data['name']]
 
 def player_bio_data(player_id: int) -> List[str]:
