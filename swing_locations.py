@@ -134,7 +134,7 @@ def pull_day_misses(day):
         date_dfs += [pd.read_csv(io.StringIO(res_miss_dist.decode('utf-8'))).assign(game_date = day, pos=pos)]
     return pd.concat(date_dfs,ignore_index=True).reset_index()
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=3600,show_time=True)
 def load_timing_data():
     date_dfs = []
     with ThreadPoolExecutor(max_workers=16) as executor:
@@ -165,8 +165,7 @@ def load_timing_data():
         miss_concise_df[stat] = miss_concise_df[stat+'_percent'].mul(miss_concise_df['n_swings']).round(0).astype('int')
     return miss_concise_df
     
-with st.spinner("Loading Swing Data...", show_time=True):
-    timing_data = load_timing_data()
+timing_data = load_timing_data()
 timing_data['name'] = [' '.join(x.split(', ')[::-1]) for x in timing_data['name']]
 
 def player_bio_data(player_id: int) -> List[str]:
