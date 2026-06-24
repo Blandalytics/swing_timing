@@ -58,6 +58,13 @@ sns.set_theme(
     font=base_font
     )
 mpl.rcParams.update({"font.weight": 400})
+@st.cache_data(ttl=3600)
+def letter_logo():
+    logo_loc = 'https://res.cloudinary.com/dduabusaf/image/upload/v1772839606/teal_letter_logo_owufaj.png'
+    logo = Image.open(urllib.request.urlopen(logo_loc))
+    return logo
+
+letter_logo = letter_logo()
 
 st.set_page_config(page_title='MLB Swing Location Charts', page_icon=letter_logo,
                    layout='wide')
