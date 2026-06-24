@@ -475,6 +475,6 @@ swing_count_dict, chart_df = transform_data(player_id,timing_data,pos_text,p_han
 if st.button('Generate Charts'):
     with st.spinner("Generating Charts...", show_time=True):
         miss_chart(chart_df,pos,b_hand,p_hand)
-st.write("For swings that are ***Centered*** (a swing where the barrel is within +/-4 inches from ball, horizontally) and/or ***Lined Up*** (a swing where the barrel is within +/- 2 inches from ball, vertically), locations were assigned by drawing from a distribution based on their non-Centered/Lined Up swings. The specific locations within those parameters are noisy, and are meant to be illustrative, rather than exact.")
+st.write("For swings that are ***Centered*** (a swing where the barrel is within +/-4 inches from ball, horizontally) and/or ***Lined Up*** (a swing where the barrel is within +/- 2 inches from ball, vertically), locations were assigned by drawing from a distribution based on their non-Centered/Lined Up swings. Due to the nature of the sampling, the locations in those areas will be slightly different each time they're generated. They are meant to be illustrative, rather than exact.")
 st.write('Swing Timing definitions and leaderboards can be found at [Baseball Savant](https://baseballsavant.mlb.com/leaderboard/bat-tracking/swing-timing-miss-distance?type=pitcher&season[]=2026&split[]=api_pitch_type_group03)')
 
