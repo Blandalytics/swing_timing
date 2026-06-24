@@ -1,0 +1,18 @@
+[server]
+enableStaticServing = true
+
+[theme]
+base = 'dark'
+font = "'DM Sans':https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+primaryColor = "#d6a513" #72CBFD
+blueColor = '#00d4ff' #'#339cff'
+yellowColor = '#F1C647'
+backgroundColor = "#101222"
+dataframeBorderColor = "#32344a"
+dataframeHeaderBackgroundColor = "#101222"
+textColor = '#ffffff'
+
+[theme.sidebar]
+primaryColor = "#0076B8"
+backgroundColor = "#32344A"
+secondaryBackgroundColor = "292C42"
