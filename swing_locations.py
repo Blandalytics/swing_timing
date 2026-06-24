@@ -313,8 +313,8 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         b_hand = combo_df.loc[combo_df['p_hand']==p_hand,'b_hand'].value_counts().index[0]
     for group in list(combo_df.loc[(combo_df['p_hand']==p_hand) & (combo_df['b_hand']==b_hand),group_base].value_counts().index):
         if pos=='p':
-            bw_adjust = np.clip((swing_count_dict[(group,b_hand)]-10)/20,0.25,1.75)
-            if swing_count_dict[(group,b_hand)]<10:
+            bw_adjust = np.clip((swing_count_dict[(group,b_hand)]-10)/20,0.5,1.75)
+            if swing_count_dict[(group,b_hand)]<20:
                 continue
         else:
             bw_adjust = 1.1
