@@ -420,8 +420,10 @@ if 'pos' not in ss:
 def pos_change():
     if 'player' in ss:
         del ss['player']
-st.radio("Select a position:", ['Pitcher','Batter'],index=0, 
-         key='pos',on_change=pos_change)
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.radio("Select a position:", ['Pitcher','Batter'],index=0, 
+             key='pos',on_change=pos_change)
 
 pos_text = ss['pos'].lower()
 pos = pos_text[0]
@@ -435,31 +437,33 @@ if 'player' not in ss:
 
 player_idx = player_list.index(ss['player'])
 
-st.selectbox(f'Choose a {pos_text}:',
-             player_list,
-             index=player_idx,
-             key='player')
-player_ids = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['name']==ss['player']),'id'].value_counts().index)
-if len(player_ids)==1:
-    player_id = player_ids[0]
-else:
-    # For your Maxes Muncy, your Luises Castillo, etc
-    player_id = st.selectbox(f'Choose an MLBAMID:',player_ids)
+with col2:
+    st.selectbox(f'Choose a {pos_text}:',
+                 player_list,
+                 index=player_idx,
+                 key='player')
+    player_ids = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['name']==ss['player']),'id'].value_counts().index)
+    if len(player_ids)==1:
+        player_id = player_ids[0]
+    else:
+        # For your Maxes Muncy, your Luises Castillo, etc
+        player_id = st.selectbox(f'Choose an MLBAMID:',player_ids)
 
 player_name, b_hand, p_hand = player_bio_data(player_id)
 
 hitter_handednesses = ['R','L']
 pitcher_handednesses = ['R','L']
-if pos=='p':
-    if p_hand=='S':
-        p_hand = st.selectbox(f"Choose the player's pitching side:",['R','L'])
-    hitter_handednesses = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['id']==player_id) & (timing_data['pitch_hand']==p_hand),'bat_side'].value_counts().index)
-    b_hand = st.selectbox(f"Choose the opposing hitters' handedness:",hitter_handednesses)
-else:
-    if b_hand=='S':
-        b_hand = st.selectbox(f"Choose the player's hitting side:",['R','L'])
-    pitcher_handednesses = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['id']==player_id) & (timing_data['bat_side']==b_hand),'pitch_hand'].value_counts().index)
-    p_hand = st.selectbox(f"Choose the opposing pitchers' handedness:",pitcher_handednesses)
+with col3:
+    if pos=='p':
+        if p_hand=='S':
+            p_hand = st.selectbox(f"Choose the player's pitching side:",['R','L'])
+        hitter_handednesses = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['id']==player_id) & (timing_data['pitch_hand']==p_hand),'bat_side'].value_counts().index)
+        b_hand = st.selectbox(f"Choose the opposing hitters' handedness:",hitter_handednesses)
+    else:
+        if b_hand=='S':
+            b_hand = st.selectbox(f"Choose the player's hitting side:",['R','L'])
+        pitcher_handednesses = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['id']==player_id) & (timing_data['bat_side']==b_hand),'pitch_hand'].value_counts().index)
+        p_hand = st.selectbox(f"Choose the opposing pitchers' handedness:",pitcher_handednesses)
     
 swing_count_dict, chart_df = transform_data(player_id,timing_data,pos_text,p_hand,b_hand)
 
