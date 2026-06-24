@@ -328,10 +328,10 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
 
         fig, ax = plt.subplots(figsize=(8,4))
         if pos=='p':
-            fig.text(0.5,0.82,f"{b_hand}HH vs {player_name}'s {marker_names[group]}",ha='center',va='center')
+            fig.text(0.5,0.83,f"{b_hand}HH vs {player_name}'s {marker_names[group]}",ha='center',va='center')
         else:
             plural_text = '' if group =='Offspeed' else 's'
-            fig.text(0.5,0.82,f"{player_name} vs {group.replace('_',' ')}{plural_text} ({p_hand}HP)",
+            fig.text(0.5,0.83,f"{player_name} vs {group.replace('_',' ')}{plural_text} ({p_hand}HP)",
                     ha='center',va='center')
         # fig.text(0.175 if b_hand=='R' else 0.675,0.175,
         #          f"x = Average\n+ = Most Common",
@@ -402,7 +402,7 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         ax.set(xlim=(-15,15) if b_hand=='R' else (15,-15),
                 ylim=(-7.5,7.5),aspect=1)
 
-        fig.suptitle('Ball Locations Relative to the Bat',y=0.92,fontsize=20)
+        fig.suptitle('Ball Locations Relative to the Bat',y=0.94,fontsize=20)
         ax.axis('off')
         logo_ax = fig.add_axes([0.38,0.13,0.24,0.24], anchor='SW', zorder=1)
         logo_ax.imshow(logo)
