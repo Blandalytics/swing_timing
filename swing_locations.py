@@ -243,7 +243,7 @@ def player_miss_data(input_fields, player_io_df, player_ou_df):
             net_over_val = 0
         else:
             net_over_val = (ou_dict['under'] - ou_dict['over']) / (ou_dict['under'] + ou_dict['over'])
-        test_ou['distance'] = test_ou['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(1.0*net_over_val,2/3,size=test_ou.shape[0])),-2,2).astype('float'))
+        test_ou['distance'] = test_ou['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(1.0*net_over_val,2/3,size=test_ou.shape[0])),-1.3,1.3).astype('float'))
 
     return combine_counts(test_io,test_ou,pitch_type,throw,stand)
 
