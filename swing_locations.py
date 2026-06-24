@@ -153,8 +153,14 @@ def load_timing_data():
     over_under = ['over', 'lined_up', 'under']
     early_late = ['early', 'on_time', 'late']
     timing_types = in_out + over_under + early_late
+
+    miss_concise_df['avg_x_centered'] = None
+    miss_concise_df['avg_y_on_time'] = None
+    miss_concise_df['avg_z_lined_up'] = None
         
     miss_concise_df['perfect'] = miss_concise_df['perfect_percent'].mul(miss_concise_df['n_swings']).round(0).astype('int')
+    for letter in ['x','y','z']:
+        miss_concise_df[f'avg_{letter}_perfect'] = None
     for stat in timing_types:
         miss_concise_df[stat] = miss_concise_df[stat+'_percent'].mul(miss_concise_df['n_swings']).round(0).astype('int')
     return miss_concise_df
