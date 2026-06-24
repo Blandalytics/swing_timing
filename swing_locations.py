@@ -165,6 +165,8 @@ def load_timing_data():
     return miss_concise_df
     
 timing_data = load_timing_data()
+hitter_list = [' '.join(x.split(', ')[::-1]) for x in timing_data.loc[timing_data['pos']=='batter','name'].sort_values(key=lambda x: x.str.lower()).unique()]
+pitcher_list = [' '.join(x.split(', ')[::-1]) for x in timing_data.loc[timing_data['pos']=='pitcher','name'].sort_values(key=lambda x: x.str.lower()).unique()]
 timing_data['name'] = [' '.join(x.split(', ')[::-1]) for x in timing_data['name']]
 
 def player_bio_data(player_id: int) -> List[str]:
@@ -426,7 +428,8 @@ with col1:
 
 pos_text = ss['pos'].lower()
 pos = pos_text[0]
-player_list = list(timing_data.loc[timing_data['pos']==pos_text,'name'].sort_values(key=lambda x: x.str.lower()).unique())
+
+
 
 if 'player' not in ss:
     if ss['pos'] == 'Pitcher':
@@ -434,6 +437,10 @@ if 'player' not in ss:
     else:
         ss['player'] = 'Juan Soto'
 
+if ss['pos'] == 'Pitcher':
+    player_list = pitcher_list
+else:
+    player_list = hitter_list
 player_idx = player_list.index(ss['player'])
 
 with col2:
