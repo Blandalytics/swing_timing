@@ -419,7 +419,7 @@ if 'pos' not in ss:
 def pos_change():
     if 'player' in ss:
         del ss['player']
-col1, col2, col3 = st.columns([0.2,0.3,0.5)
+col1, col2, col3 = st.columns([0.2,0.3,0.5])
 with col1:
     st.radio("Select a position:", ['Pitcher','Batter'],index=0, 
              key='pos',on_change=pos_change)
