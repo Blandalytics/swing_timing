@@ -94,6 +94,7 @@ marker_colors = {
     'FF':'#FF6683',
     'SI':'#F2B24B',
     'FS':'#83D6FF',
+    'FO':'#83D6FF',
     'FC':'#C59C9C',
     'SL':'#CE66FF',
     'ST':'#FFAAF7',
