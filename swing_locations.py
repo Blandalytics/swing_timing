@@ -137,7 +137,7 @@ def pull_day_misses(day):
 def load_timing_data():
     date_dfs = []
     with ThreadPoolExecutor(max_workers=16) as executor:
-        futures = {executor.submit(pull_day_misses, day): day for day in pd.date_range(start=datetime(2026, 3, 25), end=datetime.now(ZoneInfo("US/Eastern")).date()-timedelta(days=1))}
+        futures = {executor.submit(pull_day_misses, day): day for day in pd.date_range(start=datetime(2026, 3, 25), end=datetime.now(ZoneInfo("America/New_York")).date()-timedelta(days=1))}
         for future in tqdm.tqdm(as_completed(futures), total=len(futures), desc="Processing", unit="days"):
         # for future in as_completed(futures):
             date_dfs += [future.result()]
