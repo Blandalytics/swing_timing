@@ -359,11 +359,11 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         ### Bat
         ## Top Line
         ax.plot([-6,5.25], [2.61/2,2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-        ax.plot([-26.75,-12.125], [1/2,0.9/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([-26.75,-12.12], [1/2,0.9/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
 
         ## Bottom Line
-        ax.plot([-26.75,-12.125], [-1/2,-1.1/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([-26.75,-12.12], [-1/2,-1.1/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         ax.plot([-6,5.25], [-2.61/2,-2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
         if b_hand=='R':
@@ -380,7 +380,7 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
             ax.plot([-12,-6.15], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
             
         # Cap
-        ax.plot([6,6], [-2.1/2,2.2/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([6,6], [-2.15/2,2.25/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
         ## Handle
         ax.plot([-27,-27], [-2/2,2/2], color='w', zorder=9, linewidth=2, alpha=0.5)
