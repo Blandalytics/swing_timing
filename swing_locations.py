@@ -432,7 +432,7 @@ st.selectbox(f'Choose a {pos_text}:',
              index=player_idx,
              key='player')
 player_ids = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['name']==ss['player']),'id'].value_counts().index)
-if len(player_ids)==0:
+if len(player_ids)==1:
     player_id = player_ids[0]
 else:
     # For your Maxes Muncy, your Luises Castillo, etc
