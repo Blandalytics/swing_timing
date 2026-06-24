@@ -464,4 +464,5 @@ else:
 swing_count_dict, chart_df = transform_data(player_id,timing_data,pos_text,p_hand,b_hand)
 
 if st.button('Generate Charts'):
-    miss_chart(chart_df,pos,b_hand,p_hand)
+    with st.spinner("Generating Charts...", show_time=True):
+        miss_chart(chart_df,pos,b_hand,p_hand)
