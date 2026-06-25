@@ -215,97 +215,194 @@ def load_logo():
 
 logo = load_logo()
 
-def player_miss_data(input_fields, player_io_df, player_ou_df):
-    date, pitch_type, zone_height, stand, throw = input_fields
-    test_io = player_io_df.loc[(player_io_df['game_date']==date) &
-                                (player_io_df['api_pitch_type']==pitch_type) &
-                                (player_io_df['pitchzone_height_code']==zone_height) &
-                                (player_io_df['bat_side']==stand) &
-                                (player_io_df['pitch_hand']==throw)
-                                ].reset_index(drop=True)
-    io_dict = test_io.set_index('variable')['count'].to_dict()
-    if io_dict:
-        if (io_dict['flailed'] + io_dict['tied_up'])==0:
-            net_out_val = 0
-        else:
-            net_out_val = (io_dict['flailed'] - io_dict['tied_up']) / (io_dict['flailed'] + io_dict['tied_up'])
-        test_io['distance'] = test_io['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(3.5*net_out_val,4/3,size=test_io.shape[0])),-4,4).astype('float'))
+# def player_miss_data(input_fields, player_io_df, player_ou_df):
+#     date, pitch_type, zone_height, stand, throw = input_fields
+#     test_io = player_io_df.loc[(player_io_df['game_date']==date) &
+#                                 (player_io_df['api_pitch_type']==pitch_type) &
+#                                 (player_io_df['pitchzone_height_code']==zone_height) &
+#                                 (player_io_df['bat_side']==stand) &
+#                                 (player_io_df['pitch_hand']==throw)
+#                                 ].reset_index(drop=True)
+#     io_dict = test_io.set_index('variable')['count'].to_dict()
+#     if io_dict:
+#         if (io_dict['flailed'] + io_dict['tied_up'])==0:
+#             net_out_val = 0
+#         else:
+#             net_out_val = (io_dict['flailed'] - io_dict['tied_up']) / (io_dict['flailed'] + io_dict['tied_up'])
+#         test_io['distance'] = test_io['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(3.5*net_out_val,4/3,size=test_io.shape[0])),-4,4).astype('float'))
 
-    test_ou = player_ou_df.loc[(player_ou_df['game_date']==date) &
-                                (player_ou_df['api_pitch_type']==pitch_type) &
-                                (player_ou_df['pitchzone_height_code']==zone_height) &
-                                (player_ou_df['bat_side']==stand) &
-                                (player_ou_df['pitch_hand']==throw)
-                                ].reset_index(drop=True)
-    ou_dict = test_ou.set_index('variable')['count'].to_dict()
-    if ou_dict:
-        if (ou_dict['under'] + ou_dict['over'])==0:
-            net_over_val = 0
-        else:
-            net_over_val = (ou_dict['under'] - ou_dict['over']) / (ou_dict['under'] + ou_dict['over'])
-        test_ou['distance'] = test_ou['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(1.0*net_over_val,2/3,size=test_ou.shape[0])),-1.3,1.3).astype('float'))
+#     test_ou = player_ou_df.loc[(player_ou_df['game_date']==date) &
+#                                 (player_ou_df['api_pitch_type']==pitch_type) &
+#                                 (player_ou_df['pitchzone_height_code']==zone_height) &
+#                                 (player_ou_df['bat_side']==stand) &
+#                                 (player_ou_df['pitch_hand']==throw)
+#                                 ].reset_index(drop=True)
+#     ou_dict = test_ou.set_index('variable')['count'].to_dict()
+#     if ou_dict:
+#         if (ou_dict['under'] + ou_dict['over'])==0:
+#             net_over_val = 0
+#         else:
+#             net_over_val = (ou_dict['under'] - ou_dict['over']) / (ou_dict['under'] + ou_dict['over'])
+#         test_ou['distance'] = test_ou['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(1.0*net_over_val,2/3,size=test_ou.shape[0])),-1.3,1.3).astype('float'))
 
-    return combine_counts(test_io,test_ou,pitch_type,throw,stand)
+#     return combine_counts(test_io,test_ou,pitch_type,throw,stand)
 
-def expand_data(input_list, player_io_df, player_ou_df):
-    io_ou_combos = []
-    with ThreadPoolExecutor(max_workers=16) as executor:
-        futures = {executor.submit(player_miss_data, input_values, player_io_df, player_ou_df): input_values for input_values in input_list}
-        for future in as_completed(futures):
-            io_ou_combos += [future.result()]
-    combo_df = pd.concat(io_ou_combos,ignore_index=True)
-    combo_df['group'] = combo_df['pitchtype'].map(group_dict)
-    combo_df['color'] = combo_df['group'].map(group_colors)
+# def expand_data(input_list, player_io_df, player_ou_df):
+#     io_ou_combos = []
+#     with ThreadPoolExecutor(max_workers=16) as executor:
+#         futures = {executor.submit(player_miss_data, input_values, player_io_df, player_ou_df): input_values for input_values in input_list}
+#         for future in as_completed(futures):
+#             io_ou_combos += [future.result()]
+#     combo_df = pd.concat(io_ou_combos,ignore_index=True)
+#     combo_df['group'] = combo_df['pitchtype'].map(group_dict)
+#     combo_df['color'] = combo_df['group'].map(group_colors)
 
-    return combo_df
+#     return combo_df
 
-def transform_data(player_id,base_df,pos_text,p_hand,b_hand):
-    group_cols = ['id','name','pos','game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']
-    in_out = ['tied_up', 'centered', 'flailed']
-    over_under = ['over', 'lined_up', 'under']
+# def transform_data(player_id,base_df,pos_text,p_hand,b_hand):
+#     group_cols = ['id','name','pos','game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']
+#     in_out = ['tied_up', 'centered', 'flailed']
+#     over_under = ['over', 'lined_up', 'under']
     
-    player_df = base_df.loc[(base_df['id']==player_id) & (base_df['pos']==pos_text) & (base_df['pitch_hand']==p_hand) & (base_df['bat_side']==b_hand)]
-    player_io_df = (
-        pd.merge(
-            player_df.melt(
-                id_vars=group_cols,
-                value_vars=in_out,
-                value_name='count'
-            ),
-            player_df.melt(
-                id_vars=group_cols,
-                value_vars=['avg_x_'+x for x in in_out],
-                value_name='distance'
-            ).assign(variable =lambda x: x['variable'].str.replace('avg_x_','')),
-            how='inner',
-            on=group_cols+['variable'])
-        .sort_values(['game_date','id','pos','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand','variable'])
-        .reset_index(drop=True)
-    )
+#     player_df = base_df.loc[(base_df['id']==player_id) & (base_df['pos']==pos_text) & (base_df['pitch_hand']==p_hand) & (base_df['bat_side']==b_hand)]
+#     player_io_df = (
+#         pd.merge(
+#             player_df.melt(
+#                 id_vars=group_cols,
+#                 value_vars=in_out,
+#                 value_name='count'
+#             ),
+#             player_df.melt(
+#                 id_vars=group_cols,
+#                 value_vars=['avg_x_'+x for x in in_out],
+#                 value_name='distance'
+#             ).assign(variable =lambda x: x['variable'].str.replace('avg_x_','')),
+#             how='inner',
+#             on=group_cols+['variable'])
+#         .sort_values(['game_date','id','pos','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand','variable'])
+#         .reset_index(drop=True)
+#     )
 
-    player_ou_df = (
-        pd.merge(
-            player_df.melt(
-                id_vars=group_cols,
-                value_vars=over_under,
-                value_name='count'),
-            player_df.melt(
-                id_vars=group_cols,
-                value_vars=['avg_z_'+x for x in over_under],value_name='distance'
-            ).assign(variable =lambda x: x['variable'].str.replace('avg_z_','')),
-            how='inner',
-            on=group_cols+['variable'])
-        .sort_values(['game_date','id','pos','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand','variable'])
-        .reset_index(drop=True)
-    )
+#     player_ou_df = (
+#         pd.merge(
+#             player_df.melt(
+#                 id_vars=group_cols,
+#                 value_vars=over_under,
+#                 value_name='count'),
+#             player_df.melt(
+#                 id_vars=group_cols,
+#                 value_vars=['avg_z_'+x for x in over_under],value_name='distance'
+#             ).assign(variable =lambda x: x['variable'].str.replace('avg_z_','')),
+#             how='inner',
+#             on=group_cols+['variable'])
+#         .sort_values(['game_date','id','pos','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand','variable'])
+#         .reset_index(drop=True)
+#     )
 
+#     if pos=='b':
+#       swing_count_dict = player_df.groupby(['api_pitch_type','pitch_hand'])['n_swings'].sum().to_dict()
+#     else:
+#       swing_count_dict = player_df.groupby(['api_pitch_type','bat_side'])['n_swings'].sum().to_dict()
+#     input_list = list(player_io_df[['game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']].value_counts().index)
+
+#     return swing_count_dict, expand_data(input_list, player_io_df, player_ou_df)
+
+def swing_sampling(test_inputs,player_io_df,player_ou_df):
+    group_combos = {}
+    max_len = 0
+    group = 0
+    for test_input in test_inputs:
+        date, pitch_type, zone_height, stand, throw = test_input
+        test_io = player_io_df.loc[(player_io_df['game_date']==date) &
+                                    (player_io_df['api_pitch_type']==pitch_type) &
+                                    (player_io_df['pitchzone_height_code']==zone_height) &
+                                    (player_io_df['bat_side']==stand) &
+                                    (player_io_df['pitch_hand']==throw)
+                                    ].reset_index(drop=True)
+        io_dict = test_io.set_index('variable')['count'].to_dict()
+        if io_dict:
+            if (io_dict['flailed'] + io_dict['tied_up'])==0:
+                net_out_val = 0
+            else:
+                net_out_val = (io_dict['flailed'] - io_dict['tied_up']) / (io_dict['flailed'] + io_dict['tied_up'])
+            test_io['distance'] = test_io['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(4.0*net_out_val,4/2,size=test_io.shape[0])),-4,4).astype('float'))
+        test_ou = player_ou_df.loc[(player_ou_df['game_date']==date) &
+                                    (player_ou_df['api_pitch_type']==pitch_type) &
+                                    (player_ou_df['pitchzone_height_code']==zone_height) &
+                                    (player_ou_df['bat_side']==stand) &
+                                    (player_ou_df['pitch_hand']==throw)
+                                    ].reset_index(drop=True)
+        ou_dict = test_ou.set_index('variable')['count'].to_dict()
+        if ou_dict:
+            if (ou_dict['under'] + ou_dict['over'])==0:
+                net_over_val = 0
+            else:
+                net_over_val = (ou_dict['under'] - ou_dict['over']) / (ou_dict['under'] + ou_dict['over'])
+            test_ou['distance'] = test_ou['distance'].astype('float').fillna(np.clip(pd.Series(np.random.normal(1.25*net_over_val,1.25/2,size=test_ou.shape[0])),-2,2).astype('float'))
+
+        first_list = np.concatenate([a*[b] for a,b in zip(list(test_io['count']),list(test_io['distance']))]).tolist()
+        second_list = np.concatenate([a*[b] for a,b in zip(list(test_ou['count']),list(test_ou['distance']))]).tolist()
+        combos = []
+        num_combos = min(len(first_list),len(second_list))
+        if num_combos==1:
+            combos += [[first_list[0],second_list[0]]]
+        else:
+            for draw in range(num_combos):
+                combos += [[first_list.pop(np.random.randint(0,len(first_list))),second_list.pop(np.random.randint(0,len(second_list)))]]
+        max_len = max(num_combos,max_len)
+        group_combos.update({group:combos})
+        group += 1
+    return group_combos
+
+def load_data(player_id,b_hand,p_hand,base_df=timing_data):
+    player_df = base_df.loc[(base_df['id']==player_id) & (base_df['pos']==('pitcher' if pos=='p' else 'batter')) & (base_df['pitch_hand']==p_hand) & (base_df['bat_side']==b_hand)]
     if pos=='b':
       swing_count_dict = player_df.groupby(['api_pitch_type','pitch_hand'])['n_swings'].sum().to_dict()
     else:
       swing_count_dict = player_df.groupby(['api_pitch_type','bat_side'])['n_swings'].sum().to_dict()
-    input_list = list(player_io_df[['game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']].value_counts().index)
+    player_io_df = pd.merge(player_df.melt(id_vars=group_cols,value_vars=in_out,value_name='count'),
+                          player_df.melt(id_vars=group_cols,value_vars=['avg_x_'+x for x in in_out],value_name='distance').assign(variable =lambda x: x['variable'].str.replace('avg_x_','')),
+                          how='inner',
+                          on=group_cols+['variable']).sort_values(['game_date','id','pos','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand','variable']).reset_index(drop=True)
 
-    return swing_count_dict, expand_data(input_list, player_io_df, player_ou_df)
+    player_ou_df = pd.merge(player_df.melt(id_vars=group_cols,value_vars=over_under,value_name='count'),
+                          player_df.melt(id_vars=group_cols,value_vars=['avg_z_'+x for x in over_under],value_name='distance').assign(variable =lambda x: x['variable'].str.replace('avg_z_','')),
+                          how='inner',
+                          on=group_cols+['variable']).sort_values(['game_date','id','pos','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand','variable']).reset_index(drop=True)
+
+    test_inputs = list(player_io_df[['game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']].value_counts().index)
+
+    max_permutations = player_io_df.groupby(group_cols)['count'].sum().max()
+    permutation_combos = {}
+    for permutation in range(max_permutations):
+        permutation_combos.update({permutation:swing_sampling(test_inputs,player_io_df,player_ou_df)})
+    test_combos = {}
+    for y in range(len(test_inputs)):
+        test_combos.update({y:[[permutation_combos[x][y]][0] for x in permutation_combos]})
+    samples = {}
+    for group in range(len(test_inputs)):
+        group_list = [item for sublist in test_combos[group] for item in sublist]
+        dupe_list = group_list.copy()
+        res = []
+        for x in range(max_permutations):
+            for _ in range(max_permutations):
+                if len(group_list)==0:
+                    group_list = dupe_list.copy()
+                choice = random.choice(group_list)  # Pick a random element
+                res.append(choice)
+                group_list.remove(choice)
+        date, pitch_type, zone_height, stand, throw = test_inputs[group]
+        samples.update({(date, pitch_type, zone_height, stand, throw):res})
+
+    sample_dfs = []
+    for sample in samples.keys():
+        date, pitch_type, zone_height, stand, throw = sample
+        sample_dfs += [pd.DataFrame(samples[sample],columns=['in_out','over_under']).assign(date=date, pitch_type=pitch_type, zone_height=zone_height, stand=stand, throw=throw)]
+
+    chart_df = pd.concat(sample_dfs,ignore_index=True).rename(columns={'stand':'b_hand','throw':'p_hand','pitch_type':'pitchtype'})
+    chart_df['group'] = chart_df['pitchtype'].map(group_dict)
+    chart_df['color'] = chart_df['group'].map(group_colors)
+    return swing_count_dict, chart_df
 
 def miss_chart(combo_df,pos,b_hand,p_hand):
     group_base = 'pitchtype' if pos=='p' else 'group'
@@ -460,7 +557,7 @@ with col3:
         pitcher_handednesses = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['id']==player_id) & (timing_data['bat_side']==b_hand),'pitch_hand'].value_counts().index)
         p_hand = st.selectbox(f"Choose the opposing pitchers' handedness:",pitcher_handednesses)
     
-swing_count_dict, chart_df = transform_data(player_id,timing_data,pos_text,p_hand,b_hand)
+swing_count_dict, chart_df = load_data(player_id,b_hand,p_hand)
 if st.button('Generate Charts'):
     with st.spinner("Generating Charts...", show_time=True):
         miss_chart(chart_df,pos,b_hand,p_hand)
