@@ -368,8 +368,8 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         ax.plot([-4.625,5.15], [-2.61/2,-2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
         if b_hand=='R':
-            ax.add_artist(mpatches.Arc((5.225,0.555),1.495,1.5,theta1=0, theta2=90,color='w',linewidth=2,alpha=0.5))
-            ax.add_artist(mpatches.Arc((5.225,-0.6),1.495,1.5,theta1=270, theta2=360,color='w',linewidth=2,alpha=0.5))
+            ax.add_artist(mpatches.Arc((5.22,0.555),1.5,1.5,theta1=0, theta2=90,color='w',linewidth=2,alpha=0.5))
+            ax.add_artist(mpatches.Arc((5.22,-0.58),1.5,1.5,theta1=270, theta2=360,color='w',linewidth=2,alpha=0.5))
             ax.plot([-15,-4.725], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
             ax.plot([-15,-4.725], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         else:
