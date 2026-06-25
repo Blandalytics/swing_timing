@@ -363,7 +363,6 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         ax.plot([-4.625,5.15], [2.61/2,2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         ax.plot([-26.75,-15.125], [1/2,0.9/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
-
         ## Bottom Line
         ax.plot([-26.75,-15.125], [-1/2,-1.1/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         ax.plot([-4.625,5.15], [-2.61/2,-2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
@@ -376,8 +375,8 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         else:
             ax.add_artist(mpatches.Arc((5.205,0.555),1.55,1.5,theta1=0, theta2=90,color='w',linewidth=2,alpha=0.5))
             ax.add_artist(mpatches.Arc((5.205,-0.56),1.55,1.5,theta1=270, theta2=360,color='w',linewidth=2,alpha=0.5))
-            ax.plot([-15,-4.77], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-            ax.plot([-15,-4.77], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+            ax.plot([-15,-4.76], [0.9/2,2.59/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+            ax.plot([-15,-4.76], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         # Cap
         ax.plot([6,6], [-0.49,0.49], color='w', zorder=9, linewidth=2, alpha=0.5)
 
