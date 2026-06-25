@@ -166,7 +166,6 @@ def load_timing_data():
     return miss_concise_df
     
 timing_data = load_timing_data()
-group_cols = ['id','name','pos','game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']
 hitter_list = [' '.join(x.split(', ')[::-1]) for x in timing_data.loc[timing_data['pos']=='batter','name'].sort_values(key=lambda x: x.str.lower()).unique()]
 pitcher_list = [' '.join(x.split(', ')[::-1]) for x in timing_data.loc[timing_data['pos']=='pitcher','name'].sort_values(key=lambda x: x.str.lower()).unique()]
 timing_data['name'] = [' '.join(x.split(', ')[::-1]) for x in timing_data['name']]
@@ -356,6 +355,9 @@ def swing_sampling(test_inputs,player_io_df,player_ou_df):
     return group_combos
 
 def load_data(player_id,b_hand,p_hand,base_df=timing_data):
+    group_cols = ['id','name','pos','game_date','api_pitch_type','pitchzone_height_code','bat_side','pitch_hand']
+    in_out = ['tied_up', 'centered', 'flailed']
+    over_under = ['over', 'lined_up', 'under']
     player_df = base_df.loc[(base_df['id']==player_id) & (base_df['pos']==('pitcher' if pos=='p' else 'batter')) & (base_df['pitch_hand']==p_hand) & (base_df['bat_side']==b_hand)]
     if pos=='b':
         swing_count_dict = player_df.groupby(['api_pitch_type','pitch_hand'])['n_swings'].sum().to_dict()
