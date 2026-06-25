@@ -379,7 +379,7 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
             ax.plot([-15,-4.77], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
             ax.plot([-15,-4.77], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         # Cap
-        ax.plot([6,6], [-0.51,0.535], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([6,6], [-0.51,0.525], color='w', zorder=9, linewidth=2, alpha=0.5)
 
         ## Handle
         ax.plot([-27,-27], [-2/2,2/2], color='w', zorder=9, linewidth=2, alpha=0.5)
