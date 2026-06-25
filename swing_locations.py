@@ -360,29 +360,26 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         
         ### Bat
         ## Top Line
-        ax.plot([-6,5.25], [2.61/2,2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-        ax.plot([-26.75,-12.125], [1/2,0.9/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([-4.625,5.15], [2.61/2,2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([-26.75,-15.125], [1/2,0.9/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
 
         ## Bottom Line
-        ax.plot([-26.75,-12.125], [-1/2,-1.1/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-        ax.plot([-6,5.25], [-2.61/2,-2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([-26.75,-15.125], [-1/2,-1.1/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([-4.625,5.15], [-2.61/2,-2.61/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
         if b_hand=='R':
-            ax.plot([5.4,5.95], [2.59/2,2.36/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-            ax.plot([-12,-6.105], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-
-            ax.plot([5.4,5.95], [-2.62/2,-2.36/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-            ax.plot([-12,-6.105], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+            ax.add_artist(mpatches.Arc((5.225,0.555),1.495,1.5,theta1=0, theta2=90,color='w',linewidth=2,alpha=0.5))
+            ax.add_artist(mpatches.Arc((5.225,-0.6),1.495,1.5,theta1=270, theta2=360,color='w',linewidth=2,alpha=0.5))
+            ax.plot([-15,-4.725], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+            ax.plot([-15,-4.725], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         else:
-            ax.plot([5.37,5.95], [2.58/2,2.36/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-            ax.plot([-12,-6.125], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-
-            ax.plot([5.37,5.95], [-2.63/2,-2.36/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-            ax.plot([-12,-6.125], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
-            
+            ax.add_artist(mpatches.Arc((5.2,0.555),1.5,1.5,theta1=0, theta2=90,color='w',linewidth=2,alpha=0.5))
+            ax.add_artist(mpatches.Arc((5.2,-0.6),1.5,1.5,theta1=270, theta2=360,color='w',linewidth=2,alpha=0.5))
+            ax.plot([-15,-4.77], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+            ax.plot([-15,-4.77], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         # Cap
-        ax.plot([6,6], [-2.15/2,2.25/2], color='w', zorder=9, linewidth=2, alpha=0.5)
+        ax.plot([6,6], [-0.5125,0.5375], color='w', zorder=9, linewidth=2, alpha=0.5)
 
         ## Handle
         ax.plot([-27,-27], [-2/2,2/2], color='w', zorder=9, linewidth=2, alpha=0.5)
@@ -390,11 +387,11 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         ax.plot([-28,-27], [-2/2,-2/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         ax.plot([-28,-27], [2/2,2/2], color='w', zorder=9, linewidth=2, alpha=0.5)
 
-        ## Barrel Area
-        fig.add_artist(mpatches.FancyBboxPatch((0.42, 0.455), 0.185, 0.08,
+        ## Barrel
+        ax.add_artist(mpatches.FancyBboxPatch((-4, -1), 8, 2,
                                                 ec='w',
                                                 fc='w',
-                                                alpha=0.1,
+                                                alpha=0.2,
                                                 zorder=8,
                                                 linewidth=1,
                                                 boxstyle=mpatches.BoxStyle("Round", pad=0.2),
