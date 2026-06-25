@@ -411,17 +411,14 @@ def load_data(player_id,b_hand,p_hand,base_df=timing_data):
 def miss_chart(combo_df,pos,b_hand,p_hand):
     group_base = 'pitchtype' if pos=='p' else 'group'
     chart_colors = marker_colors if pos=='p' else group_colors
-    if pos=='b':
-        b_hand = combo_df.loc[combo_df['p_hand']==p_hand,'b_hand'].value_counts().index[0]
-    for group in list(combo_df.loc[(combo_df['p_hand']==p_hand) & (combo_df['b_hand']==b_hand),group_base].value_counts().index):
+    for group in combo_df.loc[(combo_df['p_hand']==p_hand) & (combo_df['b_hand']==b_hand),group_base].unique():
         if pos=='p':
-            bw_adjust = np.clip((swing_count_dict[(group,b_hand)])/30,1,1.5)
-            if swing_count_dict[(group,b_hand)]<20:
+            bw_adjust = np.clip((swing_count_dict[(group,b_hand)]-10)/40,1,1.75)
+            if swing_count_dict[(group,b_hand)]<40:
                 continue
         else:
-            bw_adjust = 1.1
+            bw_adjust = 1.5
         chart_df = combo_df.loc[(combo_df[group_base]==group) & (combo_df['p_hand']==p_hand) & (combo_df['b_hand']==b_hand)].reset_index(drop=True)
-        chart_df = chart_df[['mul','in_out','over_under']].loc[chart_df.index.repeat(chart_df['mul'].max()**0.5-chart_df['mul']**0.5+1)].reset_index(drop=True)
 
         # gauss_data = np.vstack([chart_df['in_out'],chart_df['over_under']])
         # kde = gaussian_kde(gauss_data)
