@@ -560,9 +560,9 @@ with col3:
         pitcher_handednesses = list(timing_data.loc[(timing_data['pos']==pos_text) & (timing_data['id']==player_id) & (timing_data['bat_side']==b_hand),'pitch_hand'].value_counts().index)
         p_hand = st.selectbox(f"Choose the opposing pitchers' handedness:",pitcher_handednesses)
     
-swing_count_dict, chart_df = load_data(player_id,b_hand,p_hand)
 if st.button('Generate Charts'):
     with st.spinner("Generating Charts...", show_time=True):
+        swing_count_dict, chart_df = load_data(player_id,b_hand,p_hand)
         miss_chart(chart_df,pos,b_hand,p_hand)
 st.write("For swings that are ***Centered*** (a swing where the barrel is within +/-4 inches from ball, horizontally) and/or ***Lined Up*** (a swing where the barrel is within +/- 2 inches from ball, vertically), locations were assigned by drawing from a distribution based on their non-Centered/Lined Up swings. Due to the nature of the sampling, the locations in those areas will be slightly different each time they're generated. They are meant to be illustrative, rather than exact.")
 st.write('Swing Timing definitions and leaderboards can be found at [Baseball Savant](https://baseballsavant.mlb.com/leaderboard/bat-tracking/swing-timing-miss-distance?type=pitcher&season[]=2026&split[]=api_pitch_type_group03)')
