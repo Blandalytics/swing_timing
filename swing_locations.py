@@ -374,8 +374,8 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
             ax.plot([-15,-4.725], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
             ax.plot([-15,-4.725], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         else:
-            ax.add_artist(mpatches.Arc((5.2,0.555),1.52,1.5,theta1=0, theta2=90,color='w',linewidth=2,alpha=0.5))
-            ax.add_artist(mpatches.Arc((5.2,-0.56),1.52,1.5,theta1=270, theta2=360,color='w',linewidth=2,alpha=0.5))
+            ax.add_artist(mpatches.Arc((5.21,0.555),1.52,1.5,theta1=0, theta2=90,color='w',linewidth=2,alpha=0.5))
+            ax.add_artist(mpatches.Arc((5.21,-0.56),1.52,1.5,theta1=270, theta2=360,color='w',linewidth=2,alpha=0.5))
             ax.plot([-15,-4.77], [0.9/2,2.58/2], color='w', zorder=9, linewidth=2, alpha=0.5)
             ax.plot([-15,-4.77], [-1.1/2,-2.64/2], color='w', zorder=9, linewidth=2, alpha=0.5)
         # Cap
