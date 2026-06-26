@@ -482,7 +482,7 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
         ax.add_artist(mpatches.FancyBboxPatch((-4, -1), 8, 2,
                                                 ec='w',
                                                 fc='w',
-                                                alpha=0.2,
+                                                alpha=0.15,
                                                 zorder=8,
                                                 linewidth=1,
                                                 boxstyle=mpatches.BoxStyle("Round", pad=0.2),
