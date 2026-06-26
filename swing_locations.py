@@ -138,7 +138,7 @@ def pull_day_misses(day):
 @st.cache_data(ttl=3600,show_time=True)
 def load_timing_data():
     date_dfs = []
-    with ThreadPoolExecutor(max_workers=16) as executor:
+    with ThreadPoolExecutor(max_workers=32) as executor:
         futures = {executor.submit(pull_day_misses, day): day for day in pd.date_range(start=datetime(2026, 3, 25), end=datetime.now(ZoneInfo("America/New_York")).date()-timedelta(days=1))}
         for future in as_completed(futures):
             date_dfs += [future.result()]
