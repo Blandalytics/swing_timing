@@ -492,7 +492,7 @@ def miss_chart(combo_df,pos,b_hand,p_hand):
 
         ax.set(xlim=(-15,15) if b_hand=='R' else (15,-15),
                 ylim=(-7.5,7.5),aspect=1)
-        fig.text(0.85,0.15,'Data: MLB',fontsize=9,ha='right')
+        fig.text(0.88,0.15,'Data: MLB',fontsize=9,ha='right')
         fig.suptitle('Ball Locations Relative to the Bat',y=0.94,fontsize=20)
         ax.axis('off')
         logo_ax = fig.add_axes([0.38,0.13,0.24,0.24], anchor='SW', zorder=1)
